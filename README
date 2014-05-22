@@ -4,3 +4,9 @@ to it, save, and load it again later. EV's are added by selecting a pokemon
 you've defeated in battle. The program will automatically apply the appropriate
 EV's to your pokemon based on that. This still has a long way to go but its
 getting there.
+
+** An example of the custom .pk save files **
+
+NAME OF YOUR POKEMON ; HEALTH, ATTACK, DEFENSE, SP.ATTACK, SP.DEFENSE, SPEED
+
+Bulby; 3,1,3,5,6,7
