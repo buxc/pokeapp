@@ -14,7 +14,7 @@ Node::Node()
 //explicit const
 Node::Node(std::string n, int* v):next(NULL), name(n)
 {
-	int* value = (int*)malloc(sizeof(int)*6);
+	value = (int*)malloc(sizeof(int)*6);
 	for(int i = 0; i < 6; i++)
 	{
 		value[i] = v[i];
@@ -95,33 +95,45 @@ bool LinkedList::empty() const
 	}
 }
 
-bool LinkedList::search(std::string poke)
+bool LinkedList::search(std::string poke, Pokemon* p)
 {
-	/*will turn to true if find pokemon*/
-	bool worked = false;
 	/*Node pointer to keep track of where we are in list*/
 	Node* current;
+	bool end = true;
 	/*start at head of list*/
 	current = head;
 	/*if list isn't empty...*/
 	if(!empty())
 	{
 		/*cycle through list until find match*/
-		while(current->name != poke)
-		{
+		while(current != NULL && current->name != poke && end)
+		{	/*if at end of list*/
+			if(current->next == NULL)
+			{
+				end = false;
+				current = NULL;
+			}
 			//advance one node down list
-			current = current->next;
+			if(end)
+			{
+				current = current->next;
+			}
 		}
-		/*current should be nullptr if no match*/
+		/*If we found the pokemon*/
 		if(current != NULL)
 		{
-			/*call fxn to make changes to poke file*/
-			
-			worked = true;
+			/*Add ev's to user's pokemon*/
+			for(int i = 0; i < 6; i++)
+			{
+				p->atts[i] += current->value[i];
+			}
+			std::cout << "EVs added." << std::endl;	
+			/*mark boolean to say fxn worked*/
+			return true;
 		}
 		
 	}
-	return worked;
+	return false;
 }
 
 /*pokemon class shit*/
@@ -205,18 +217,21 @@ Btree::Btree():head(NULL){}
 
 /*loads all pokemon from specified file. Will end up creating a number
 of pokemon objects which will be stored in a binary tree sorted by name*/
-void Btree::loadPokemon(std::string file)
+bool Btree::loadPokemon(std::string file)
 {
 	const char* fileC = new char[file.length() + 1];
 	fileC = file.c_str();
 	//open file stream
 	std::ifstream ifs;
 	ifs.open(fileC, std::ifstream::in);
-	
-	//put inside loop
-	//??
+	/*check if file opened*/
+	if(!ifs.is_open())
+	{
+		std::cout << "Error: Something wrong with input file. ABORT" << std::endl;
+		return false;
+	}
 	//create string stream to store info.
-		//get the line from file containing pokemon name and ev's
+	//get the line from file containing pokemon name and ev's
 	std::string line;
 	while(std::getline(ifs, line))
 	{
@@ -247,7 +262,7 @@ void Btree::loadPokemon(std::string file)
 		store(p);
 	}
 	ifs.close();	
-//	delete[] fileC;
+	return true;
 }
 
 /*overload << operator for pokemon*/

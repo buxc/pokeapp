@@ -32,22 +32,6 @@ class Node{
 	friend std::istream& operator>>(std::istream &in, Node node);
 };
 
-/*Linked List class that will contain all the nodes*/
-class LinkedList{
-    public:
-	/*first node, should be bulbasaur*/
-	Node* head;
-	LinkedList();
-	~LinkedList();
-	/*checks if list is empty*/
-	bool empty() const;
-	/*searches for pokemon through name, returns bool to
-	say if successful or not*/	
-	bool search(std::string poke);
-	void loadList();
-	void add(Node* n);
-};
-
 /*pokemon class that will be saved/loaded to/from files*/
 class Pokemon{
     public:
@@ -62,6 +46,22 @@ class Pokemon{
 	friend std::ostream& operator<<(std::ostream &out, Pokemon& p);
 	friend std::istream& operator>>(std::istream &in, Pokemon& p);	
 };	
+/*Linked List class that will contain all the nodes*/
+class LinkedList{
+    public:
+	/*first node, should be bulbasaur*/
+	Node* head;
+	LinkedList();
+	~LinkedList();
+	/*checks if list is empty*/
+	bool empty() const;
+	/*searches for pokemon through name, returns bool to
+	say if successful or not*/	
+	bool search(std::string poke, Pokemon* p);
+	void loadList();
+	void add(Node* n);
+};
+
 //#endif	
 
 class Btree{
@@ -74,6 +74,6 @@ class Btree{
 	Pokemon* search(std::string name);
 	void store(Pokemon* p);
 	/*Load pokemon from file, parameter is name of file*/
-	void loadPokemon(std::string file);
+	bool loadPokemon(std::string file);
 
 };
