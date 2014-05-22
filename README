@@ -1,0 +1,6 @@
+So this is a command line to tool to help keep track of your pokemon's ev's.
+It is not finished yet but is getting there. Can create a new pokemon, add ev's
+to it, save, and load it again later. EV's are added by selecting a pokemon
+you've defeated in battle. The program will automatically apply the appropriate
+EV's to your pokemon based on that. This still has a long way to go but its
+getting there.
