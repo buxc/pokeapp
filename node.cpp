@@ -3,15 +3,36 @@
 #include <istream>
 #include <fstream>
 #include <iostream>
+/**
+	Function definitions of all functions, not just of Node.
 
-//implicit const
+	@author Vasili Papastrat
+	@version 1.0 5/23/2014
+*/
+
+
+
+
+/**
+	Implicit constructor for Node. Sets name
+	data member to empty string "" and next data
+	member to NULL
+*/
 Node::Node()
 {
 	name = "";
 	next = NULL;
 }
 
-//explicit const
+/**
+	Explicit constructor for Node. Allocates
+	int* value onto heap and sets EVs.
+
+	@param string for pokemon's name
+	@param pointer to int array of evs to be copied
+	@return pointer to object
+
+*/
 Node::Node(std::string n, int* v):next(NULL), name(n)
 {
 	value = (int*)malloc(sizeof(int)*6);
@@ -63,7 +84,9 @@ Node::~Node()
 /*implicit const*/
 LinkedList::LinkedList():head(NULL){}
 
-/*destructor*/
+/**
+	Destructor for LinkedList
+*/
 LinkedList::~LinkedList()
 {
 	/*if list is empty*/
@@ -82,7 +105,10 @@ LinkedList::~LinkedList()
 	}
 }
 
-/*checks if empty*/
+/**
+	Checks if list of reference pokemon is empty
+	@return "true" if empty, "false" if not
+*/
 bool LinkedList::empty() const
 {
 	if(head == NULL)
@@ -94,7 +120,13 @@ bool LinkedList::empty() const
 		return false;
 	}
 }
+/**
+	Keeps the user's pokemon from exceeding 510 total EVs.
+	
+	@return a boolean "true" if pokemon has less than 510,
+	"false" if have reached limit
 
+*/
 bool Pokemon::check()
 {
 	int total = 0;
@@ -113,7 +145,17 @@ bool Pokemon::check()
 		return true;
 	}
 }
-
+/**
+	Searches LinkedList of ref. pokemon for match user provided,
+	based on name. If finds a match will add ref's EVs to user's
+	EVs.
+	
+	@param string of ref pokemon's name.
+	@param Pokemon* pointing to user's pokemon which we want
+	to add EVs to.
+	@param number of times we want to add ref's EVs to user's.
+	@return whether we found a match to ref pokemon or not.
+*/
 bool LinkedList::search(std::string poke, Pokemon* p, int times)
 {
 	/*Node pointer to keep track of where we are in list*/
@@ -200,7 +242,13 @@ void Pokemon::addEV(int* a)
 	}
 }
 
-//does the actual output to file
+/**
+	Does the actual writing to outfile.
+	
+	@param Pokemon* to pokemon currently writing to file.
+	@param outputfile stream.
+	
+*/
 void Btree::saveHelper2(Pokemon* p, std::ofstream& ofs)
 {
 	//now do the actual writing to the file
@@ -213,9 +261,14 @@ void Btree::saveHelper2(Pokemon* p, std::ofstream& ofs)
 }
 
 
-/*PREORDER*/
-/*provides saveHelper2 with each pokemon object to write
-to the outfile*/
+/**
+	Performs PREORDER search on btree storing all user's pokemon.
+	Provides fxn saveHelper2 with each pokemon object needing to be
+	written to the outfile.
+	
+	@param Pokemon* current position in btree.
+	@param outputfile stream
+*/
 void Btree::saveHelper1(Pokemon* p, std::ofstream& ofs)
 {
 	if(p == NULL)
@@ -228,8 +281,12 @@ void Btree::saveHelper1(Pokemon* p, std::ofstream& ofs)
 }
 
 
-/*initializes everything for the save helper functions to do the
-actual work*/
+/**
+	Initializes everything for the save helper functions to do the
+	actual saving.
+	
+	@param string name of output file
+*/
 void Btree::save(std::string file)
 {
 	//open outputfile stream
@@ -247,8 +304,13 @@ Btree::Btree():head(NULL){}
 
 /*Don't need explicit const*/
 
-/*loads all pokemon from specified file. Will end up creating a number
-of pokemon objects which will be stored in a binary tree sorted by name*/
+/**
+	Loads all pokemon from specified file. Will end up creating a number
+	of pokemon objects which will be stored in a binary tree sorted by name.
+
+	@param name of inputfile.
+	@return whether opened inputfile successfully or not
+*/
 bool Btree::loadPokemon(std::string file)
 {
 	const char* fileC = new char[file.length() + 1];
@@ -331,6 +393,12 @@ std::istream& operator>> (std::istream& in, Pokemon& p)
 	return in;
 }
 
+/**
+	Stores user's pokemon from inputfile or create during session in
+	binary tree sorted by name.
+	
+	@param Pokemon* current pokemon to be stored.
+*/
 void Btree::store(Pokemon* p)
 {
 	if(head == NULL)
@@ -379,6 +447,14 @@ void Btree::store(Pokemon* p)
 	}
 }
 
+/**
+	Searches btree of user's pokemon for a specific one user specified.
+	Returned pointer to pokemon will be used to add EVs.
+
+	@param name of user's desired pokemon.
+	@return pointer to desired pokemon or NULL if not found.
+	
+*/
 Pokemon* Btree::search(std::string name)
 {
 	//if names match
@@ -413,6 +489,11 @@ Pokemon* Btree::search(std::string name)
 	}
 }
 
+/**
+	Adds one Node to LinkedList, always at the end.
+
+	@param pointer to Node to be stored.
+*/
 void LinkedList::add(Node* n)
 {
 	if(head == NULL)
@@ -430,6 +511,10 @@ void LinkedList::add(Node* n)
 	current->next = n;
 }
 
+/**
+	Loads LinkedList of reference pokemon(Nodes) that is accessed
+	everytime the user wants to add EVs to pokemon.
+*/
 void LinkedList::loadList()
 {
 	//format
@@ -487,6 +572,7 @@ void LinkedList::loadList()
 	evs[3] = 3;
 	Node* charizard = new Node("Charizard", evs);
 	add(charizard);
+	//
 	for(int i = 0; i < 6; i++)
 	{
 		evs[i] = 0;
