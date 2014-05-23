@@ -4,6 +4,11 @@ to it, save, and load it again later. EV's are added by selecting a pokemon
 you've defeated in battle. The program will automatically apply the appropriate
 EV's to your pokemon.
 
+Still need to include support for:
+	-Natures
+	-Items
+	-Pokerus
+
 ** An example of the custom .pk save files **
 
 NAME OF YOUR POKEMON ; HEALTH, ATTACK, DEFENSE, SP.ATTACK, SP.DEFENSE, SPEED

@@ -1,9 +1,17 @@
 #include "node.h"
 
+/**
+	Driver for the program. Contains all UI elements.
+
+	@author Vasili Papastrat
+	@version 1.0 5/23/2014
+
+*/
+
 int main()
-{	std::cout <<"/***************************************/" << std::endl;
-	std::cout <<"Hello! This command line tool keeps track of you pokemon's EVs for you." << std::endl << "Developed by Vasili Papastrat(vpapastrat@hotmail.com)in early 2014."<<std::endl<<"IMPORTANT: For every yes/no question, respond with either 'y' or 'n'!" << std::endl;
-	std::cout <<"/***************************************/" << std::endl;
+{	std::cout <<"/************************************************************/ \n" << std::endl;
+	std::cout <<"Hello! This command line tool keeps track of your pokemon's EVs for you." << std::endl << "Developed by Vasili Papastrat(vpapastrat@hotmail.com)in early 2014."<<std::endl<<"IMPORTANT: For every yes/no question, respond with either 'y' or 'n'!" << std::endl;
+	std::cout <<" \n /************************************************************/" << std::endl;
 
 
 	/*start everything off by creating and loading pokemon
