@@ -41,6 +41,7 @@ class Pokemon{
 	int* atts;
 	Pokemon();
 	Pokemon(std::string n, int* a);
+	bool check();
 	void addEV(int* a);
 	/*saves pokemon to file, parameter is name of file*/
 	friend std::ostream& operator<<(std::ostream &out, Pokemon& p);
@@ -57,7 +58,7 @@ class LinkedList{
 	bool empty() const;
 	/*searches for pokemon through name, returns bool to
 	say if successful or not*/	
-	bool search(std::string poke, Pokemon* p);
+	bool search(std::string poke, Pokemon* p, int times);
 	void loadList();
 	void add(Node* n);
 };

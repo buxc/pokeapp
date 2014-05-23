@@ -1,7 +1,12 @@
 #include "node.h"
 
 int main()
-{	/*start everything off by creating and loading pokemon
+{	std::cout <<"/***************************************/" << std::endl;
+	std::cout <<"Hello! This command line tool keeps track of you pokemon's EVs for you." << std::endl << "Developed by Vasili Papastrat(vpapastrat@hotmail.com)in early 2014."<<std::endl<<"IMPORTANT: For every yes/no question, respond with either 'y' or 'n'!" << std::endl;
+	std::cout <<"/***************************************/" << std::endl;
+
+
+	/*start everything off by creating and loading pokemon
 	linked list*/
 	LinkedList* list = new LinkedList();
 	list->loadList();	
@@ -28,11 +33,9 @@ int main()
 	{
 		/*I guess don't do anything?*/
 	}
-	std::cout << std::endl;
 	/*get output file name*/
 	std::cout << "Which file to save to later on?:";
 	std::cin >> outFile;
-	std::cout << std::endl;
 	/*now start master loop*/
 	bool keep_going = true;
 	while(keep_going)
@@ -40,12 +43,11 @@ int main()
 		std::cout << "Enter name of your pokemon:";
 		std::string name;
 		std::cin >> name;
-		std::cout << std::endl;
 		Pokemon* pokemon = tree->search(name);
 		/*if user's pokemon doesn't exist*/
 		if(pokemon == NULL)
 		{
-			std::cout << "Pokemon not loaded. Create new pokemon of same name?(enter either 'y' or 'n':";			
+			std::cout << "Pokemon not loaded. Create new pokemon?:";		
 			char create;
 			std::cin >> create;
 			/*if user wants to create new pokemon*/
@@ -54,6 +56,8 @@ int main()
 				Pokemon* p = new Pokemon();
 				/*assign name previously entered*/
 				p->name = name;
+				/*get attributes*/
+				std::cin >> *p;
 				/*store pokemon in binary tree*/
 				tree->store(p);
 			}
@@ -61,6 +65,7 @@ int main()
 		/*if user's pokemon does exist*/
 		else
 		{
+			int times;
 			char choice;
 			bool contin = true;
 			while(contin)
@@ -68,8 +73,10 @@ int main()
 				std::cout << "Which pokemon did you defeat?:";
 				std::string defeated;
 				std::cin >> defeated;
+				std::cout << "How many times?:";
+				std::cin >> times;
 				/*if search fxn fails, execute if statement*/
-				if(!list->search(defeated, pokemon))
+				if(!list->search(defeated, pokemon, times))
 				{
 					std::cout << "Pokemon does not exist. Please make sure you spell the name correctly." << std::endl;
 				}

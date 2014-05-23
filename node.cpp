@@ -95,7 +95,26 @@ bool LinkedList::empty() const
 	}
 }
 
-bool LinkedList::search(std::string poke, Pokemon* p)
+bool Pokemon::check()
+{
+	int total = 0;
+	/*Sum all the EVs*/
+	for(int i = 0; i < 6; i++)
+	{
+		total += atts[i];
+	}
+	/*If the total is greater than or equal to 510*/
+	if(total >= 510)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+bool LinkedList::search(std::string poke, Pokemon* p, int times)
 {
 	/*Node pointer to keep track of where we are in list*/
 	Node* current;
@@ -122,13 +141,26 @@ bool LinkedList::search(std::string poke, Pokemon* p)
 		/*If we found the pokemon*/
 		if(current != NULL)
 		{
-			/*Add ev's to user's pokemon*/
-			for(int i = 0; i < 6; i++)
+			for(int h = 0; h < times; h++)
 			{
-				p->atts[i] += current->value[i];
-			}
-			std::cout << "EVs added." << std::endl;	
-			/*mark boolean to say fxn worked*/
+				/*Add ev's to user's pokemon*/
+				for(int i = 0; i < 6; i++)
+				{
+					if(p->check())
+					{
+						p->atts[i] += current->value[i];
+						if(p->atts[i] >= 255)
+						{
+							p->atts[i] = 255;
+						}
+					}
+				}
+				
+			}	
+			std::cout << "EVs added." << std::endl;
+			std::cout << "/***************/"<< std::endl;
+			std::cout << *p;
+			std::cout << "/***************/" << std::endl;
 			return true;
 		}
 		
@@ -139,7 +171,7 @@ bool LinkedList::search(std::string poke, Pokemon* p)
 /*pokemon class shit*/
 Pokemon::Pokemon():name(""), left(NULL), right(NULL)
 {
-	int* atts = (int*)malloc(sizeof(int) * 6);
+	atts = (int*)malloc(sizeof(int) * 6);
 	for(int i = 0; i < 6; i++)
 	{
 		atts[i] = 0;
@@ -274,7 +306,7 @@ std::ostream& operator<< (std::ostream& out, Pokemon& p)
 	out << "Defense:" << p.atts[2] << std::endl;
 	out << "Special Attack:" << p.atts[3] << std::endl;
 	out << "Special Defense:" << p.atts[4] << std::endl;
-	out << "Speed" << p.atts[5] << std::endl;
+	out << "Speed:" << p.atts[5] << std::endl;
 	return out;
 } 
 
@@ -283,17 +315,17 @@ std::istream& operator>> (std::istream& in, Pokemon& p)
 {
 	std::cout << "Please enter name of new Pokemon:";
 	in >> p.name;
-	std::cout << std::endl << "Already acquired EVs for: Health:";
+	std::cout << "Already acquired EVs for: Health:";
 	in >> p.atts[0];
-	std::cout << std::endl << "Attack:";
+	std::cout <<  "Attack:";
 	in >> p.atts[1];
-	std::cout << std::endl << "Defense:";
+	std::cout << "Defense:";
 	in >> p.atts[2];
-	std::cout << std::endl << "Special Attack:";
+	std::cout << "Special Attack:";
 	in >> p.atts[3];
-	std::cout << std::endl << "Special Defense:";
+	std::cout << "Special Defense:";
 	in >> p.atts[4];
-	std::cout << std::endl << "Speed";
+	std::cout << "Speed:";
 	in >> p.atts[5];
 	std::cout << std::endl;
 	return in;
